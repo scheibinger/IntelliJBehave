@@ -83,7 +83,7 @@
   </actions>
 
   <extensions defaultExtensionNs="com.intellij">
-    <runConfigurationProducer implementation="com.github.kumaraman21.intellijbehave.runner.JBehaveStoryRunConfigurationProducer"/>
+    <runConfigurationProducer implementation="com.github.kumaraman21.intellijbehave.runner.JBehaveAbstractRunConfigurationProducer"/>
 
     <fileTypeFactory implementation="com.github.kumaraman21.intellijbehave.language.StoryFileTypeFactory"/>
     <lang.parserDefinition language="Story" implementationClass="com.github.kumaraman21.intellijbehave.parser.StoryParserDefinition"/>

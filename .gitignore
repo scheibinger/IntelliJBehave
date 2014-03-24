@@ -44,4 +44,5 @@ IntelliJBehave.zip
 .idea
 
 # Atlassian Plugin Configuration
-atlassian-ide-plugin.xml
+atlassian-ide-plugin.xmltemp:
+*.log

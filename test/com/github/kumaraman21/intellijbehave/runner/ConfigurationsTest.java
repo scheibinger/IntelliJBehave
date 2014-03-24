@@ -1,55 +1,33 @@
 package com.github.kumaraman21.intellijbehave.runner;
 
 
-import com.intellij.openapi.application.PluginPathManager;
+import com.intellij.openapi.application.PathManager;
 import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.testFramework.builders.JavaModuleFixtureBuilder;
-import com.intellij.testFramework.fixtures.*;
-import com.intellij.util.ui.UIUtil;
-import org.junit.After;
-import org.junit.Before;
+import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 
 import java.io.File;
 
-/**
- * Created by rscheibinger on 3/20/14.
- */
-public class ConfigurationsTest {
-    private TempDirTestFixture myFixture;
-    private IdeaProjectTestFixture myProjectFixture;
+public class ConfigurationsTest extends LightCodeInsightFixtureTestCase{
 
-    @Before
     public void setUp() throws Exception {
-        JavaTestFixtureFactory.getFixtureFactory();   // registers Java module fixture builder
-        final IdeaTestFixtureFactory fixtureFactory = IdeaTestFixtureFactory.getFixtureFactory();
-        final TestFixtureBuilder<IdeaProjectTestFixture> testFixtureBuilder = fixtureFactory.createFixtureBuilder();
-        myFixture = fixtureFactory.createTempDirTestFixture();
-        myFixture.setUp();
+        super.setUp();
+        File fromDir = new File(getTestDataPath() + "/testData/runner/module1");
+        File toDir = new File(myFixture.getTempDirPath());
 
-        FileUtil.copyDir(new File(PluginPathManager.getPluginHomePath("testng") + "/testData/runConfiguration/module1"),
-                new File(myFixture.getTempDirPath()), false);
+        FileUtil.copyDir(fromDir, toDir, false);
+    }
 
-        myProjectFixture = testFixtureBuilder.getFixture();
-        final JavaModuleFixtureBuilder javaModuleFixtureBuilder = testFixtureBuilder.addModule(JavaModuleFixtureBuilder.class);
-        javaModuleFixtureBuilder.addContentRoot(myFixture.getTempDirPath()).addSourceRoot("src");
-        myProjectFixture.setUp();
+    @Override
+    protected String getTestDataPath() {
+        String jarPathForClass = PathManager.getJarPathForClass(ConfigurationsTest.class);
+        File testDataPath = new File(jarPathForClass, "../../..");
+        return testDataPath.getPath();
+    }
+
+    public void test_whenCreatingRunConfigurationFromContext() {
+        System.out.println("test stub");
 
     }
 
-    @After
-    public void tearDown() throws Exception {
-        UIUtil.invokeAndWaitIfNeeded(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    myProjectFixture.tearDown();
-                    myProjectFixture = null;
-                    myFixture.tearDown();
-                    myFixture = null;
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-    }
+
 }
