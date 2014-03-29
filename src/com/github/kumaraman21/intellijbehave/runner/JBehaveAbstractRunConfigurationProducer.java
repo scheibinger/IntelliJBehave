@@ -22,7 +22,7 @@ public abstract class JBehaveAbstractRunConfigurationProducer extends JavaRunCon
     //todo
     private static final String JBEHAVE_MAIN_CLASS = "TODO";
 
-    protected JBehaveAbstractRunConfigurationProducer(ConfigurationType configurationType) {
+    protected JBehaveAbstractRunConfigurationProducer() {
         super(JBehaveRunConfigurationType.getInstance());
     }
 

@@ -13,32 +13,22 @@ import static org.mockito.Mockito.*;
  */
 public class JBehaveAbstractRunConfigurationProducerTest extends LightCodeInsightFixtureTestCase {
 
-    private JBehaveAbstractRunConfigurationProducer givenStoryRunconfigurationProducer(
-            JBehaveRunConfigurationType jBehaveRunConfigurationTypeMock) {
+    private JBehaveAbstractRunConfigurationProducer givenStoryRunconfigurationProducer() {
 
-        return new JBehaveStoryRunConfigurationProducerImpl(jBehaveRunConfigurationTypeMock);
+        return new JBehaveStoryRunConfigurationProducer();
     }
 
     public void test_whenCreatingNewRunConfigurationProducer_thenItsCreated() {
-        JBehaveRunConfigurationType jBehaveRunConfigurationTypeMock = mock(JBehaveRunConfigurationType.class);
-        givenStoryRunconfigurationProducer(jBehaveRunConfigurationTypeMock);
+        givenStoryRunconfigurationProducer();
     }
 
     public void test_whenSettingUpConfigurationFromContext() throws Exception {
-        JBehaveRunConfigurationType jBehaveRunConfigurationTypeMock = mock(JBehaveRunConfigurationType.class);
         JBehaveRunConfiguration runConfigurationMock = mock(JBehaveRunConfiguration.class);
         ConfigurationContext configurationContext = mock(ConfigurationContext.class);
         Ref<PsiElement> sourceElement = (Ref<PsiElement>) mock(Ref.class);
 
-        JBehaveAbstractRunConfigurationProducer producer =
-                givenStoryRunconfigurationProducer(jBehaveRunConfigurationTypeMock);
+        JBehaveAbstractRunConfigurationProducer producer = givenStoryRunconfigurationProducer();
 
         producer.setupConfigurationFromContext(runConfigurationMock,configurationContext,sourceElement);
-
-
-    }
-
-    public void testIsConfigurationFromContext() throws Exception {
-
     }
 }
