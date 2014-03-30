@@ -5,16 +5,11 @@ import com.intellij.openapi.util.Ref;
 import com.intellij.psi.PsiElement;
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 
-import static org.fest.assertions.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
-/**
- * Created by rscheibinger on 3/19/14.
- */
-public class JBehaveAbstractRunConfigurationProducerTest extends LightCodeInsightFixtureTestCase {
+public class JBehaveStoryRunConfigurationProducerTest extends LightCodeInsightFixtureTestCase {
 
-    private JBehaveAbstractRunConfigurationProducer givenStoryRunconfigurationProducer() {
-
+    private JBehaveStoryRunConfigurationProducer givenStoryRunconfigurationProducer() {
         return new JBehaveStoryRunConfigurationProducer();
     }
 
@@ -22,12 +17,12 @@ public class JBehaveAbstractRunConfigurationProducerTest extends LightCodeInsigh
         givenStoryRunconfigurationProducer();
     }
 
-    public void test_whenSettingUpConfigurationFromContext() throws Exception {
+    public void test_whenSettingUpConfigurationFromContext_shouldSetupNewConfiguration() throws Exception {
         JBehaveRunConfiguration runConfigurationMock = mock(JBehaveRunConfiguration.class);
         ConfigurationContext configurationContext = mock(ConfigurationContext.class);
         Ref<PsiElement> sourceElement = (Ref<PsiElement>) mock(Ref.class);
 
-        JBehaveAbstractRunConfigurationProducer producer = givenStoryRunconfigurationProducer();
+        JBehaveStoryRunConfigurationProducer producer = givenStoryRunconfigurationProducer();
 
         producer.setupConfigurationFromContext(runConfigurationMock,configurationContext,sourceElement);
     }

@@ -2,28 +2,26 @@ package com.github.kumaraman21.intellijbehave.runner;
 
 import com.github.kumaraman21.intellijbehave.language.StoryFileType;
 import com.intellij.execution.actions.ConfigurationContext;
+import com.intellij.execution.junit.JavaRunConfigurationProducerBase;
+import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * Created by rscheibinger on 3/20/14.
- */
-public class JBehaveStoryRunConfigurationProducer extends JBehaveAbstractRunConfigurationProducer {
-    protected JBehaveStoryRunConfigurationProducer() {
-        super();
+public class JBehaveStoryRunConfigurationProducer extends JavaRunConfigurationProducerBase<JBehaveRunConfiguration> implements Cloneable{
+
+    public JBehaveStoryRunConfigurationProducer() {
+        super(JBehaveRunConfigurationType.getInstance());
     }
 
-    @Override
-    protected String getConfigurationName(ConfigurationContext context) {
+    private String getConfigurationName(ConfigurationContext context) {
         final VirtualFile featureFile = getFileToRun(context);
         assert featureFile != null;
         return "Story: " + featureFile.getNameWithoutExtension();
     }
 
     @Nullable
-    @Override
-    protected VirtualFile getFileToRun(ConfigurationContext context) {
+    private VirtualFile getFileToRun(ConfigurationContext context) {
         final PsiElement element = context.getPsiLocation();
         if (element != null && element.getContainingFile().getFileType().equals(StoryFileType.STORY_FILE_TYPE)) {
             return element.getContainingFile().getVirtualFile();
@@ -32,4 +30,13 @@ public class JBehaveStoryRunConfigurationProducer extends JBehaveAbstractRunConf
         return null;
     }
 
+    @Override
+    protected boolean setupConfigurationFromContext(JBehaveRunConfiguration configuration, ConfigurationContext context, Ref<PsiElement> sourceElement) {
+        throw new IllegalStateException("Method not implemented");
+    }
+
+    @Override
+    public boolean isConfigurationFromContext(JBehaveRunConfiguration configuration, ConfigurationContext context) {
+        return false;
+    }
 }
