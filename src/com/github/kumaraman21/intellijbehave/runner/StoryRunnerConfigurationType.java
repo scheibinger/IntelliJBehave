@@ -19,6 +19,7 @@ import com.intellij.execution.application.ApplicationConfigurationType;
 import com.intellij.openapi.components.ApplicationComponent;
 import org.jetbrains.annotations.NotNull;
 
+@Deprecated
 public class StoryRunnerConfigurationType extends ApplicationConfigurationType implements ApplicationComponent {
 
     public static final String JBEHAVE_STORY_RUNNER = "JBehave Story Runner";

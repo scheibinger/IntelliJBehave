@@ -32,11 +32,13 @@ public class JBehaveStoryRunConfigurationProducer extends JavaRunConfigurationPr
 
     @Override
     protected boolean setupConfigurationFromContext(JBehaveRunConfiguration configuration, ConfigurationContext context, Ref<PsiElement> sourceElement) {
-        throw new IllegalStateException("Method not implemented");
+        System.out.println("Configure to run" + context.getPsiLocation().getContainingFile().getVirtualFile().getPath()); 
+        configuration.setStoryPsiLocation(sourceElement.get());
+        return true;
     }
 
     @Override
     public boolean isConfigurationFromContext(JBehaveRunConfiguration configuration, ConfigurationContext context) {
-        return false;
+        return true;
     }
 }

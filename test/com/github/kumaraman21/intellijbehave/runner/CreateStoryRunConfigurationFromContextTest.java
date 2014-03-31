@@ -5,6 +5,7 @@ import com.intellij.execution.Location;
 import com.intellij.execution.PsiLocation;
 import com.intellij.execution.actions.ConfigurationContext;
 import com.intellij.execution.actions.ConfigurationFromContext;
+import com.intellij.execution.configurations.ConfigurationType;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.application.PathManager;
 import com.intellij.openapi.project.Project;
@@ -36,11 +37,7 @@ public class CreateStoryRunConfigurationFromContextTest extends LightCodeInsight
         return testDataPath.getPath();
     }
 
-    public void test_whenCreatingRunConfigurationFromContext() {
-        System.out.println("test stub");
-    }
-
-    public void test_shouldCreateJBehaveRunConfigurationFromContext() {
+    public void test_whenCreatingJBehaveRunConfigurationFromContext_shouldCreateAndSetUpJBehaveRunConfiguration() {
         JBehaveStoryRunConfigurationProducer jBehaveStoryRunConfigurationProducer = givenJBehaveStoryRunConfigurationProducer();
 
         final Project project = myFixture.getProject();
@@ -53,22 +50,23 @@ public class CreateStoryRunConfigurationFromContextTest extends LightCodeInsight
 
         ConfigurationContext fromContext = ConfigurationContext.getFromContext(dataContext);
 
-
         final ConfigurationFromContext configurationFromContext = jBehaveStoryRunConfigurationProducer.createConfigurationFromContext(fromContext);
-        //assert configurationFromContext != null;
-        //final RunnerAndConfigurationSettings config = configurationFromContext.getConfigurationSettings();
-        //final RunConfiguration runConfiguration = config.getConfiguration();
-        // Assert.assertTrue(runConfiguration instanceof TestNGConfiguration);
+        assertThat(configurationFromContext).isNotNull();
+        ConfigurationType configurationType = configurationFromContext.getConfigurationType();
+        assertThat(configurationType).isInstanceOf(JBehaveRunConfigurationType.class);
 
-        // TestNGConfigurationType t = (TestNGConfigurationType)runConfiguration.getType();
-        // Assert.assertTrue(t.isConfigurationByLocation(runConfiguration, new PsiLocation(project, psiClass)));
+        //todo: assertions for set up
+    }
+
+    public void test_whenSettingUpConfigurationFromContext_shouldReuseExistingRunConfiguration(){
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     private JBehaveStoryRunConfigurationProducer givenJBehaveStoryRunConfigurationProducer() {
         return new JBehaveStoryRunConfigurationProducer();
     }
 
-    public void test_JBehaveStoryRunConfigurationProducer_shouldBeTypeOfJBehaveRunConfigurationType(){
+    public void test_givenJBehaveStoryRunConfigurationProducer_shouldBeTypeOfJBehaveRunConfigurationType(){
         JBehaveStoryRunConfigurationProducer jBehaveStoryRunConfigurationProducer = givenJBehaveStoryRunConfigurationProducer();
         String displayName = jBehaveStoryRunConfigurationProducer.getConfigurationType().getDisplayName();
         assertThat(displayName).isEqualTo("JBehave");
