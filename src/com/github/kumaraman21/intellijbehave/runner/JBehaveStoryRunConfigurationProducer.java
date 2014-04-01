@@ -6,6 +6,7 @@ import com.intellij.execution.junit.JavaRunConfigurationProducerBase;
 import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.Nullable;
 
 public class JBehaveStoryRunConfigurationProducer extends JavaRunConfigurationProducerBase<JBehaveRunConfiguration> implements Cloneable{
@@ -32,13 +33,18 @@ public class JBehaveStoryRunConfigurationProducer extends JavaRunConfigurationPr
 
     @Override
     protected boolean setupConfigurationFromContext(JBehaveRunConfiguration configuration, ConfigurationContext context, Ref<PsiElement> sourceElement) {
-        System.out.println("Configure to run" + context.getPsiLocation().getContainingFile().getVirtualFile().getPath()); 
+        if(!isConfigurationFromContext(configuration,context)){
+            return false;
+        }
         configuration.setStoryPsiLocation(sourceElement.get());
         return true;
     }
 
     @Override
     public boolean isConfigurationFromContext(JBehaveRunConfiguration configuration, ConfigurationContext context) {
+        if (getFileToRun(context) == null) {
+            return false;
+        }
         return true;
     }
 }
