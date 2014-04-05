@@ -48,6 +48,7 @@ public class JBehaveRunConfiguration extends ApplicationConfiguration {
 
                 // String path = getSMRunnerPath();
                 //params.getClassPath().add(path);
+                //todo: set parameters to run story
 
                 params.setMainClass(MAIN_CLASS_NAME);
                 for (RunConfigurationExtension ext : Extensions.getExtensions(RunConfigurationExtension.EP_NAME)) {

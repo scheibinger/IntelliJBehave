@@ -24,9 +24,9 @@ public class JBehaveStoryRunConfigurationProducer extends JavaRunConfigurationPr
     }
 
     private String getConfigurationName(ConfigurationContext context) {
-        final VirtualFile featureFile = getFileToRun(context);
-        assert featureFile != null;
-        return "Story: " + featureFile.getNameWithoutExtension();
+        final VirtualFile storyFile = getFileToRun(context);
+        assert storyFile != null;
+        return "Story: " + storyFile.getNameWithoutExtension();
     }
 
     @Nullable
@@ -35,7 +35,6 @@ public class JBehaveStoryRunConfigurationProducer extends JavaRunConfigurationPr
         if (element != null && element.getContainingFile().getFileType().equals(StoryFileType.STORY_FILE_TYPE)) {
             return element.getContainingFile().getVirtualFile();
         }
-
         return null;
     }
 
@@ -51,6 +50,8 @@ public class JBehaveStoryRunConfigurationProducer extends JavaRunConfigurationPr
         Project project = context.getProject();
         final Module module = ModuleUtilCore.findModuleForFile(containingFile.getVirtualFile(), project);
         configuration.setModule(module);
+
+        configuration.setName(getConfigurationName(context));
         return true;
     }
 

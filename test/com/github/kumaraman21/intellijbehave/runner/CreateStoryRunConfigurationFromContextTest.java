@@ -88,12 +88,21 @@ public class CreateStoryRunConfigurationFromContextTest extends JBehaveCodeInsig
     }
 
     public void test_whenCreatingConfigurationFromContext_shouldPassConfigurationCheck() throws RuntimeConfigurationException {
+        ConfigurationFromContext configurationFromContext = givenConfigurationFromContext();
+        assert configurationFromContext != null;
+        configurationFromContext.getConfiguration().checkConfiguration();
+    }
+
+    public void test_whenCreatingConfigurationFromContext_shouldSetConfigurationName(){
+        ConfigurationFromContext configurationFromContext = givenConfigurationFromContext();
+        assertThat(configurationFromContext.getConfiguration().getName()).isEqualTo("Story: test");
+    }
+
+    private ConfigurationFromContext givenConfigurationFromContext() {
         final MapDataContext dataContext = givenContextForAFile(TEST_STORY_RELATIVE_PATH);
         ConfigurationContext fromContext = ConfigurationContext.getFromContext(dataContext);
 
-        ConfigurationFromContext configurationFromContext = givenJBehaveStoryRunConfigurationProducer().createConfigurationFromContext(fromContext);
-        assert configurationFromContext != null;
-        configurationFromContext.getConfiguration().checkConfiguration();
+        return givenJBehaveStoryRunConfigurationProducer().createConfigurationFromContext(fromContext);
     }
 
     private PsiFile findStoryFileInTheProject(Project project, @NotNull String relativePath) {
