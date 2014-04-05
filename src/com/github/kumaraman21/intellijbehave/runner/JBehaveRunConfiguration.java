@@ -2,10 +2,7 @@ package com.github.kumaraman21.intellijbehave.runner;
 
 import com.intellij.execution.*;
 import com.intellij.execution.application.ApplicationConfiguration;
-import com.intellij.execution.configurations.ConfigurationFactory;
-import com.intellij.execution.configurations.JavaParameters;
-import com.intellij.execution.configurations.JavaRunConfigurationModule;
-import com.intellij.execution.configurations.RunProfileState;
+import com.intellij.execution.configurations.*;
 import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.execution.runners.ProgramRunner;

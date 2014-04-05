@@ -7,6 +7,7 @@ import com.intellij.execution.PsiLocation;
 import com.intellij.execution.actions.ConfigurationContext;
 import com.intellij.execution.actions.ConfigurationFromContext;
 import com.intellij.execution.configurations.ConfigurationType;
+import com.intellij.execution.configurations.RuntimeConfigurationException;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -84,6 +85,15 @@ public class CreateStoryRunConfigurationFromContextTest extends JBehaveCodeInsig
         ConfigurationContext fromContext = ConfigurationContext.getFromContext(dataContext);
         final ConfigurationFromContext configurationFromContext = configurationProducerSpy.createConfigurationFromContext(fromContext);
         verify(configurationProducerSpy, times(1)).isConfigurationFromContext(any(JBehaveRunConfiguration.class),any(ConfigurationContext.class));
+    }
+
+    public void test_whenCreatingConfigurationFromContext_shouldPassConfigurationCheck() throws RuntimeConfigurationException {
+        final MapDataContext dataContext = givenContextForAFile(TEST_STORY_RELATIVE_PATH);
+        ConfigurationContext fromContext = ConfigurationContext.getFromContext(dataContext);
+
+        ConfigurationFromContext configurationFromContext = givenJBehaveStoryRunConfigurationProducer().createConfigurationFromContext(fromContext);
+        assert configurationFromContext != null;
+        configurationFromContext.getConfiguration().checkConfiguration();
     }
 
     private PsiFile findStoryFileInTheProject(Project project, @NotNull String relativePath) {
