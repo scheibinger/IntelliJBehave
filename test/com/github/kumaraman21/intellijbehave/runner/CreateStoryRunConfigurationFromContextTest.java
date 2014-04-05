@@ -1,29 +1,26 @@
 package com.github.kumaraman21.intellijbehave.runner;
 
 
+import com.github.kumaraman21.intellijbehave.JBehaveCodeInsightFixtureTestCase;
 import com.intellij.execution.Location;
 import com.intellij.execution.PsiLocation;
 import com.intellij.execution.actions.ConfigurationContext;
 import com.intellij.execution.actions.ConfigurationFromContext;
 import com.intellij.execution.configurations.ConfigurationType;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.application.PathManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.testFramework.MapDataContext;
 import com.intellij.testFramework.TestDataPath;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-@TestDataPath("$CONTENT_ROOT/testData/runner/module1")
-public class CreateStoryRunConfigurationFromContextTest extends LightCodeInsightFixtureTestCase {
+@TestDataPath("$CONTENT_ROOT/testData/runner")
+public class CreateStoryRunConfigurationFromContextTest extends JBehaveCodeInsightFixtureTestCase {
 
     private final String TEST_STORY_RELATIVE_PATH = "stories/test.story";
     private final String RANDOM_FILE_RELATIVE_PATH = "stories/test.not_story";
@@ -31,13 +28,6 @@ public class CreateStoryRunConfigurationFromContextTest extends LightCodeInsight
     public void setUp() throws Exception {
         super.setUp();
         myFixture.copyDirectoryToProject("runner/stories", "stories");
-    }
-
-    @Override
-    protected String getTestDataPath() {
-        String jarPathForClass = PathManager.getJarPathForClass(CreateStoryRunConfigurationFromContextTest.class);
-        File testDataPath = new File(jarPathForClass, "../../../testData");
-        return testDataPath.getPath();
     }
 
     public void test_whenCreatingJBehaveRunConfigurationFromContext_shouldCreateAndSetUpJBehaveRunConfiguration() {
